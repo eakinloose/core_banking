@@ -8,7 +8,6 @@ const Cakeview = () => {
   const numberOfCakes = useSelector((state)=> state.cake.numberOfCakes)
   const loggedUser = useSelector((state)=> state.auth)
 
-  console.log(loggedUser)
   const dispatch = useDispatch()
   return (
     <div>

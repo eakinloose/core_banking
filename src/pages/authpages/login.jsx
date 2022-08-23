@@ -13,16 +13,14 @@ const Login = () => {
     password: "",
   });
 
-  // useEffect(() => {
-  //   if (auth._id) {
-  //     navigate("/dashboard");
-  //   }
-  // }, [auth._id, navigate]);
+  useEffect(() => {
+    if (auth._id) {
+      navigate("/dashboard");
+    }
+  }, [auth._id, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(user);
     dispatch(loginUser(user));
   };
 
