@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../features/auth/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FormWrapper } from "./authStyles";
+import ButtonLoader from "../../components/ButtonLoader/ButtonLoader";
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -9,9 +12,10 @@ const Login = () => {
   const auth = useSelector((state) => state.auth);
 
   const [user, setUser] = useState({
-    email: "",
+    coreID: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (auth._id) {
@@ -25,25 +29,36 @@ const Login = () => {
   };
 
   return (
-    <>
+    <FormWrapper>
       <form onSubmit={handleSubmit}>
-        <h2>Login</h2>
+      <div className="title">
+          <h2>Login</h2>
+          <span>----------</span>
+        </div>
         <input
-          type="email"
-          placeholder="email"
-          onChange={(e) => setUser({ ...user, email: e.target.value })}
+          type="text"
+          placeholder="coreID"
+          onChange={(e) => setUser({ ...user, coreID: e.target.value })}
         />
         <input
-          type="password"
+                    type={showPassword ? "text" : "password"}
           placeholder="password"
           onChange={(e) => setUser({ ...user, password: e.target.value })}
         />
+                
+        <div className="psd">
+        <div id="pswcheck">
+        {showPassword ? <span onClick={()=>{setShowPassword(false)}}>hide password </span>: <span onClick={()=>{setShowPassword(true)}}>show password </span>}
+        </div>
+        <Link to="">Forgot password?</Link>
+        </div>
         <button>
-          {auth.loginStatus === "pending" ? "Submitting..." : "Login"}
+          {auth.loginStatus === "pending" ? <ButtonLoader/> : "Login"}
         </button>
         {auth.loginStatus === "rejected" ? <p>{auth.loginError}</p> : null}
+        <p>Don't have an account? <Link to="/register">Register</Link></p>
       </form>
-    </>
+    </FormWrapper>
   );
 };
 

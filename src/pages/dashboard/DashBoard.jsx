@@ -1,19 +1,28 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, {useEffect } from "react";
+import { useSelector } from 'react-redux'
+import { useNavigate } from "react-router-dom";
+import LoanApply from "../../components/LoanApply/LoanApply";
+import Loans from "../../components/Loans/Loans";
+import MainDashboard from "../../components/mainDashboard/MainDashboard";
+import Sidebar from '../../components/Sidebar/Sidebar'
+import Topdashboard from "../../components/Topdashboard/Topdashboard";
 
 const DashBoard = () => {
-  const loggedUser = useSelector((state)=> state.auth)
+  const auth = useSelector((state) => state.auth);
+  const loandash = useSelector((state)=> state.display)
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!auth._id) {
+      navigate("/");
+    }
+  }, [auth._id, navigate]);
+  
   return (
     <div>
-      <h1>
-        DashBoard
-      </h1>
-      <h2>
-        {loggedUser.name}
-      </h2>
-      <h3>
-        {loggedUser.email}
-      </h3>
+      <Topdashboard/>
+      <Sidebar/>
+      {loandash.currentDisplay === "loandashboard" ? <LoanApply/>: loandash.currentDisplay === "loans"? <Loans/> : <MainDashboard/>}
     </div>
   )
 }

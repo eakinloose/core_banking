@@ -8,6 +8,9 @@ const initialState = {
   token: localStorage.getItem("token"),
   name: "",
   email: "",
+  coreID: "",
+  phone: 0,
+  host: "",
   _id: "",
   registerStatus: "",
   registerError: "",
@@ -23,9 +26,13 @@ export const registerUser = createAsyncThunk(
       const token = await axios.post(`${url}/api/register`, {
         name: values.name,
         email: values.email,
+        host: values.host.toUpperCase(),
+        phone: values.phone,
         password: values.password,
+        // not posting coreID  for security reasons because it is generated with your host and phone number
       });
       localStorage.setItem("token", token.data);
+      console.log(token.data)
       return token.data;
     } catch (error) {
       console.log(error.response.data);
@@ -39,10 +46,11 @@ export const loginUser = createAsyncThunk(
   async (values, { rejectWithValue }) => {
     try {
       const token = await axios.post(`${url}/api/login`, {
-        email: values.email,
+        coreID: values.coreID.toUpperCase(),
         password: values.password,
       });
       localStorage.setItem("token", token.data);
+      console.log(token.data)
       return token.data;
     } catch (error) {
       console.log(error.response);
@@ -61,7 +69,6 @@ export const getUser = createAsyncThunk(
 
       return token.data;
     } catch (error) {
-      console.log(error.response);
       return rejectWithValue(error.response.data);
     }
   }
@@ -82,6 +89,9 @@ const authSlice = createSlice({
           name: user.name,
           email: user.email,
           _id: user._id,
+          phone: user.phone,
+          host: user.host,
+          coreID: user.coreID,
           userLoaded: true,
         };
       } else return { ...state, userLoaded: true };
@@ -94,6 +104,9 @@ const authSlice = createSlice({
         token: "",
         name: "",
         email: "",
+        coreID: "",
+        phone: 0,
+        host: "",
         _id: "",
         registerStatus: "",
         registerError: "",
@@ -114,6 +127,9 @@ const authSlice = createSlice({
           token: action.payload,
           name: user.name,
           email: user.email,
+          phone: user.phone,
+          host: user.host,
+          coreID: user.coreID,
           _id: user._id,
           registerStatus: "success",
         };
@@ -137,6 +153,9 @@ const authSlice = createSlice({
           token: action.payload,
           name: user.name,
           email: user.email,
+          phone: user.phone,
+          host: user.host,
+          coreID: user.coreID,
           _id: user._id,
           loginStatus: "success",
         };
@@ -163,6 +182,9 @@ const authSlice = createSlice({
           token: action.payload,
           name: user.name,
           email: user.email,
+          phone: user.phone,
+          host: user.host,
+          coreID: user.coreID,
           _id: user._id,
           getUserStatus: "success",
         };

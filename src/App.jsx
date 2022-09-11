@@ -3,7 +3,6 @@ import { ThemeProvider } from 'styled-components';
 import {Routes, Route} from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { loadUser } from "./features/auth/authSlice";
-import NavBar from './components/navbar/Navbar';
 import Login from './pages/authpages/login';
 import Register from './pages/authpages/register';
 import Home from './pages/home/Home';
@@ -28,7 +27,7 @@ function App() {
       grey01: "#fbfbfb",
       grey02: "#e2e2e2",
       inputhover: "#f3f0f0c3",
-      transparent: "none",
+      transparent: "transparent",
       green: "#02b35a",
    }
   }
@@ -36,7 +35,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-        <NavBar/>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />

@@ -16,13 +16,16 @@ const GlobalStyles = createGlobalStyle`
    body {
       margin: 0;
       min-height: 100%;
+      width: 100%;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       font-family: 'Roboto', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 300;
-      letter-spacing: -0.02rem;
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 0.02rem;
       line-height: 2.5rem;
+      background-image: linear-gradient(to bottom right, #02b35a, #3f75cc);
+      background-image: linear-gradient(to bottom right, #3f75cc, #02b35a);
    }
 
    html,
@@ -33,6 +36,11 @@ const GlobalStyles = createGlobalStyle`
       font-family: 'Roboto', sans-serif;
    }
 
+   a{
+      text-decoration: none;
+      color: ${({ theme }) => theme.colors?.button};
+   }
+
    button{
     border: 0;
     padding: 0;
@@ -41,14 +49,13 @@ const GlobalStyles = createGlobalStyle`
     display: inline-block;
     max-width: 100%;
     text-align: center;
-    padding: 1.3rem 2.4rem;
+    padding: 1.2rem 2.4rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     letter-spacing: 0;
     line-height: 1.6rem;
-    font-weight: 300;
     border-radius: 3px;
     text-transform: capitalize;
     transition: transform 300ms ease-in-out;
@@ -63,12 +70,12 @@ const GlobalStyles = createGlobalStyle`
    input{
     width: 100%;
     max-width: 560px;
-   border: 1px solid ${({ theme }) => theme.colors.button};
+   border: 1px solid grey;
    outline: none;
-   font-size: 1.6rem;
+   font-size: 1.5rem;
    appearance: none;
    border-radius: 0;
-   padding: 1.3rem;
+   padding: 1.08rem;
    box-sizing: border-box;
    border-radius: 4px;
    background-color: ${({ theme }) => theme.colors?.grey01};
@@ -77,6 +84,54 @@ const GlobalStyles = createGlobalStyle`
    input:hover{
     background-color: ${({ theme }) => theme.colors?.inputhover};
    }
+
+   table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 0rem auto;
+   }
+
+   table th, table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+   }
+
+   table th{
+      background-image: linear-gradient(to bottom right, #3f75cc, teal);
+      /* background: grey; */
+      color: white;
+      font-weight: 400;
+      font-size: 14px;
+   }
+
+   label{
+      color: ${({ theme }) => theme.colors?.button};
+      text-transform: capitalize;
+      font-size: 13px;
+   }
+
+   .weak{
+      color: red;
+   }
+
+   #pswcheck{
+      height: 40px;
+      text-align: start;
+
+      #check{
+         width: 15px;
+         height: 15px;
+         cursor: pointer;
+      }
+
+      span{
+         cursor: pointer;
+      }
+   }
+
+   #name{
+    text-transform: capitalize;
+  }
 
 `;
 
