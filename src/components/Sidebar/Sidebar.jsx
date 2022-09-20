@@ -29,7 +29,7 @@ const Sidebar = () => {
       </div>
       <div>
       <p onClick={()=>{dispatch(maindashboard())}}>Main Dashboard</p>
-      <p onClick={()=>dispatch(searchLoans())}>Search Loans </p>
+      <p onClick={()=>dispatch(searchLoans())}>Search</p>
       <p onClick={()=>{dispatch(loans())}}>All Loans</p>
       <p onClick={()=>dispatch(loandashboard())}>Loan Applications </p>
       </div>
