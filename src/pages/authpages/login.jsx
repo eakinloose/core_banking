@@ -32,7 +32,9 @@ const Login = () => {
          <form onSubmit={handleSubmit}>
             <div className="title">
                <h2>Login</h2>
-               <span>----------</span>
+               <Link to="/" className="dashboard-link">
+                  click here to return back to the home page
+               </Link>
             </div>
             <input
                type="text"

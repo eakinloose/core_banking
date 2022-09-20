@@ -88,8 +88,8 @@ const Register = () => {
          <form>
             <div className="title">
                <h2>Register</h2>
-               <Link to="/dashboard" className="dashboard-link">
-                  Have a feel of what our dashboard looks like
+               <Link to="/" className="dashboard-link">
+                  click here to return back to the home page
                </Link>
             </div>
             {reg ? (
