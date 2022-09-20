@@ -52,7 +52,7 @@ const LoanApply = () => {
             <FormWrapper>
 
                <form className="form-apply" onSubmit={handleSubmit}>
-                  <h3>Loan Application</h3>
+                  <h3>Loan Application form</h3>
                   <p>Personal  Information</p>
                   <label htmlFor="title">Title</label>
                   <br/>
