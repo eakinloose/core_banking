@@ -133,6 +133,17 @@ const GlobalStyles = createGlobalStyle`
     text-transform: capitalize;
   }
 
+  .inactive{
+   color:grey;
+   background: #c9d2f2;
+   cursor: not-allowed;
+  }
+
+  .inactive:hover{
+   color:grey;
+   background: #c9d2f2;
+  }
+
 `;
 
 export { GlobalStyles };

@@ -6,11 +6,11 @@ const url = "http://localhost:4000"
 
 const initialState = {
   token: localStorage.getItem("token"),
-  name: "",
+  firstName: "",
+  lastName: "",
   email: "",
-  coreID: "",
   phone: 0,
-  host: "",
+  coreBankingID: "",
   _id: "",
   registerStatus: "",
   registerError: "",
@@ -24,12 +24,12 @@ export const registerUser = createAsyncThunk(
   async (values, { rejectWithValue }) => {
     try {
       const token = await axios.post(`${url}/api/register`, {
-        name: values.name,
+        firstName: values.firstName,
+        lastName: values.lastName,
         email: values.email,
-        host: values.host.toUpperCase(),
         phone: values.phone,
+        coreBankingID: values.coreBankingID.toUpperCase(),
         password: values.password,
-        // not posting coreID  for security reasons because it is generated with your host and phone number
       });
       localStorage.setItem("token", token.data);
       console.log(token.data)
@@ -46,7 +46,7 @@ export const loginUser = createAsyncThunk(
   async (values, { rejectWithValue }) => {
     try {
       const token = await axios.post(`${url}/api/login`, {
-        coreID: values.coreID.toUpperCase(),
+        coreBankingID: values.coreBankingID.toUpperCase(),
         password: values.password,
       });
       localStorage.setItem("token", token.data);
@@ -86,12 +86,12 @@ const authSlice = createSlice({
         return {
           ...state,
           token,
-          name: user.name,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
-          _id: user._id,
           phone: user.phone,
-          host: user.host,
-          coreID: user.coreID,
+          coreBankingID: user.coreBankingID,
+          _id: user._id,
           userLoaded: true,
         };
       } else return { ...state, userLoaded: true };
@@ -102,11 +102,11 @@ const authSlice = createSlice({
       return {
         ...state,
         token: "",
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
-        coreID: "",
         phone: 0,
-        host: "",
+        coreBankingID: "",
         _id: "",
         registerStatus: "",
         registerError: "",
@@ -125,11 +125,11 @@ const authSlice = createSlice({
         return {
           ...state,
           token: action.payload,
-          name: user.name,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
           phone: user.phone,
-          host: user.host,
-          coreID: user.coreID,
+          coreBankingID: user.coreBankingID,
           _id: user._id,
           registerStatus: "success",
         };
@@ -151,11 +151,11 @@ const authSlice = createSlice({
         return {
           ...state,
           token: action.payload,
-          name: user.name,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
           phone: user.phone,
-          host: user.host,
-          coreID: user.coreID,
+          coreBankingID: user.coreBankingID,
           _id: user._id,
           loginStatus: "success",
         };
@@ -180,11 +180,11 @@ const authSlice = createSlice({
         return {
           ...state,
           token: action.payload,
-          name: user.name,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
           phone: user.phone,
-          host: user.host,
-          coreID: user.coreID,
+          coreBankingID: user.coreBankingID,
           _id: user._id,
           getUserStatus: "success",
         };

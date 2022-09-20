@@ -16,9 +16,12 @@ const displaySlice = createSlice({
     },
     loans:(state, action) => {
       state.currentDisplay= "loans"
+    },
+    searchLoans:(state, action) => {
+      state.currentDisplay= "searchloans"
     }
   }
 });
 
 export default displaySlice.reducer;
-export const {loandashboard, loans, maindashboard } = displaySlice.actions;
+export const {loandashboard, loans, searchLoans, maindashboard } = displaySlice.actions;

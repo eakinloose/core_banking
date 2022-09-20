@@ -14,8 +14,16 @@ const Loansview = () => {
    
    return (
       <div>
-         {loggedUser.host}
+         {loggedUser.coreBankingID} : {loggedUser.firstName}
          <h3>List of loans</h3>
+         {/* <input
+                     // onChange={(e) =>
+                     //    setFormData({ ...formData, firstname: e.target.value })
+                     // }
+                     // value={formData.firstname}
+                     type="text"
+                     placeholder="Search"
+                  /> */}
          {loansList.loading && <div>loading...</div>}
          {!loansList.loading && loansList.error ? (
             <div>{loans.error}</div>

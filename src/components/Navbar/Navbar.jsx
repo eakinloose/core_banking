@@ -31,7 +31,7 @@ const NavBar = () => {
                   >
                     Log out
                   </button>
-                  <span id="name">{loggedUser.name}</span>
+                  <span id="name">{loggedUser.firstName} {loggedUser.lastName}</span>
                   </div>
                 ) : (
                   <>
