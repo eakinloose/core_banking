@@ -10,7 +10,6 @@ const Register = () => {
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const auth = useSelector((state) => state.auth);
-   const [reg, setReg] = useState(true);
 
    const [user, setUser] = useState({
       firstName: "",
@@ -19,14 +18,14 @@ const Register = () => {
       phone: 0,
       coreBankingID: "",
       password: "",
+      confirmPassword: "",
    });
-
+   const [reg, setReg] = useState(true);
    const [inactive, setInactive] = useState(true);
    const [showPassword, setShowPassword] = useState(false);
    const [notStrong, setNotStrong] = useState("");
    const [checkingID, setCheckingID] = useState(false);
 
-   // a state of password validation
    useEffect(() => {
       if (auth._id) {
          navigate("/dashboard");
@@ -34,10 +33,12 @@ const Register = () => {
    }, [auth._id, navigate]);
 
    useEffect(() => {
+      const emailRegEx = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
       if (
          user.firstName == "" ||
          user.lastName == "" ||
          user.email == "" ||
+         !user.email.match(emailRegEx) ||
          user.phone == "" ||
          user.coreBankingID == ""
       ) {
@@ -58,22 +59,21 @@ const Register = () => {
    const handleSubmit = (e) => {
       e.preventDefault();
       const passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
-      if (
-         user.firstName == "" ||
-         user.lastName == "" ||
-         user.email == "" ||
-         user.phone == "" ||
-         user.coreBankingID == "" ||
-         user.password == ""
-      ) {
+      if (user.password.match(passw) && user.password == user.confirmPassword) {
+         setNotStrong("good");
+         dispatch(registerUser(user));
+      } else if (user.password == "" || user.confirmPassword == "") {
          setNotStrong("fields");
          const timer = setTimeout(() => {
             setNotStrong("");
-         }, 1000);
+         }, 3000);
          return () => clearTimeout(timer);
-      } else if (user.password.match(passw)) {
-         setNotStrong("good");
-         dispatch(registerUser(user));
+      } else if (user.password !== user.confirmPassword) {
+         setNotStrong("unmatched");
+         const timer = setTimeout(() => {
+            setNotStrong("");
+         }, 3000);
+         return () => clearTimeout(timer);
       } else if (!user.password.match(passw)) {
          setNotStrong("bad");
          const timer = setTimeout(() => {
@@ -86,12 +86,26 @@ const Register = () => {
    return (
       <FormWrapper>
          <form>
-            <div className="title">
-               <h2>Register</h2>
-               <Link to="/" className="dashboard-link">
-                  click here to return back to the home page
-               </Link>
-            </div>
+            {reg ? (
+               <div className="title">
+                  <h2>Register</h2>
+                  <Link to="/" className="dashboard-link">
+                  Return Home
+                  </Link>
+               </div>
+            ) : (
+               <div className="title">
+                  <h2>Create Password</h2>
+                  <p
+                     className="entry"
+                     onClick={() => {
+                        setReg(true);
+                     }}
+                  >
+                     Return to the Data entering page
+                  </p>
+               </div>
+            )}
             {reg ? (
                <>
                   <input
@@ -129,7 +143,6 @@ const Register = () => {
                         setUser({ ...user, coreBankingID: e.target.value })
                      }
                   />
-
                   {inactive ? (
                      <button onClick={IDchecker}>
                         {checkingID ? <ButtonLoader /> : "Validate ID"}
@@ -152,11 +165,19 @@ const Register = () => {
                </>
             ) : (
                <>
+                  <h3>Hello {user.firstName} please create a password</h3>
                   <input
                      type={showPassword ? "text" : "password"}
                      placeholder="password"
                      onChange={(e) =>
                         setUser({ ...user, password: e.target.value })
+                     }
+                  />
+                  <input
+                     type={showPassword ? "text" : "password"}
+                     placeholder="Confirm password"
+                     onChange={(e) =>
+                        setUser({ ...user, confirmPassword: e.target.value })
                      }
                   />
                   <div id="pswcheck">
@@ -199,6 +220,11 @@ const Register = () => {
                   {notStrong === "fields" ? (
                      <div className="weak">
                         <span>Empty input field</span>
+                     </div>
+                  ) : null}
+                  {notStrong === "unmatched" ? (
+                     <div className="weak">
+                        <span>Password does not match</span>
                      </div>
                   ) : null}
                </>

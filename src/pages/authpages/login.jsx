@@ -10,6 +10,8 @@ const Login = () => {
    const dispatch = useDispatch();
    const auth = useSelector((state) => state.auth);
 
+   const [forgotPassword, setForgotPassword] = useState(false);
+
    const [user, setUser] = useState({
       coreBankingID: "",
       password: "",
@@ -33,7 +35,7 @@ const Login = () => {
             <div className="title">
                <h2>Login</h2>
                <Link to="/" className="dashboard-link">
-                  click here to return back to the home page
+                  Return Home
                </Link>
             </div>
             <input

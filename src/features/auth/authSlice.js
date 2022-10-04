@@ -2,202 +2,202 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
 
-const url = "http://localhost:4000"
+const url = "http://localhost:4000";
 
 const initialState = {
-  token: localStorage.getItem("token"),
-  firstName: "",
-  lastName: "",
-  email: "",
-  phone: 0,
-  coreBankingID: "",
-  _id: "",
-  registerStatus: "",
-  registerError: "",
-  loginStatus: "",
-  loginError: "",
-  userLoaded: false,
+   token: localStorage.getItem("token"),
+   firstName: "",
+   lastName: "",
+   email: "",
+   phone: 0,
+   coreBankingID: "",
+   _id: "",
+   registerStatus: "",
+   registerError: "",
+   loginStatus: "",
+   loginError: "",
+   userLoaded: false,
 };
 
 export const registerUser = createAsyncThunk(
-  "auth/registerUser",
-  async (values, { rejectWithValue }) => {
-    try {
-      const token = await axios.post(`${url}/api/register`, {
-        firstName: values.firstName,
-        lastName: values.lastName,
-        email: values.email,
-        phone: values.phone,
-        coreBankingID: values.coreBankingID.toUpperCase(),
-        password: values.password,
-      });
-      localStorage.setItem("token", token.data);
-      console.log(token.data)
-      return token.data;
-    } catch (error) {
-      console.log(error.response.data);
-      return rejectWithValue(error.response.data);
-    }
-  }
+   "auth/registerUser",
+   async (values, { rejectWithValue }) => {
+      try {
+         const token = await axios.post(`${url}/api/register`, {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            phone: values.phone,
+            coreBankingID: values.coreBankingID.toUpperCase(),
+            password: values.password,
+         });
+         localStorage.setItem("token", token.data);
+         console.log(token.data);
+         return token.data;
+      } catch (error) {
+         console.log(error.response.data);
+         return rejectWithValue(error.response.data);
+      }
+   }
 );
 
 export const loginUser = createAsyncThunk(
-  "auth/loginUser",
-  async (values, { rejectWithValue }) => {
-    try {
-      const token = await axios.post(`${url}/api/login`, {
-        coreBankingID: values.coreBankingID.toUpperCase(),
-        password: values.password,
-      });
-      localStorage.setItem("token", token.data);
-      console.log(token.data)
-      return token.data;
-    } catch (error) {
-      console.log(error.response);
-      return rejectWithValue(error.response.data);
-    }
-  }
+   "auth/loginUser",
+   async (values, { rejectWithValue }) => {
+      try {
+         const token = await axios.post(`${url}/api/login`, {
+            coreBankingID: values.coreBankingID.toUpperCase(),
+            password: values.password,
+         });
+         localStorage.setItem("token", token.data);
+         console.log(token.data);
+         return token.data;
+      } catch (error) {
+         console.log(error.response);
+         return rejectWithValue(error.response.data);
+      }
+   }
 );
 
 export const getUser = createAsyncThunk(
-  "auth/getUser",
-  async (id, { rejectWithValue }) => {
-    try {
-      const token = await axios.get(`${url}/user/${id}`, setHeaders());
+   "auth/getUser",
+   async (id, { rejectWithValue }) => {
+      try {
+         const token = await axios.get(`${url}/user/${id}`, setHeaders());
 
-      localStorage.setItem("token", token.data);
+         localStorage.setItem("token", token.data);
 
-      return token.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
+         return token.data;
+      } catch (error) {
+         return rejectWithValue(error.response.data);
+      }
+   }
 );
 
 const authSlice = createSlice({
-  name: "auth",
-  initialState,
-  reducers: {
-    loadUser(state, action) {
-      const token = state.token;
+   name: "auth",
+   initialState,
+   reducers: {
+      loadUser(state, action) {
+         const token = state.token;
 
-      if (token) {
-        const user = jwtDecode(token);
-        return {
-          ...state,
-          token,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          phone: user.phone,
-          coreBankingID: user.coreBankingID,
-          _id: user._id,
-          userLoaded: true,
-        };
-      } else return { ...state, userLoaded: true };
-    },
-    logoutUser(state, action) {
-      localStorage.removeItem("token");
+         if (token) {
+            const user = jwtDecode(token);
+            return {
+               ...state,
+               token,
+               firstName: user.firstName,
+               lastName: user.lastName,
+               email: user.email,
+               phone: user.phone,
+               coreBankingID: user.coreBankingID,
+               _id: user._id,
+               userLoaded: true,
+            };
+         } else return { ...state, userLoaded: true };
+      },
+      logoutUser(state, action) {
+         localStorage.removeItem("token");
 
-      return {
-        ...state,
-        token: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: 0,
-        coreBankingID: "",
-        _id: "",
-        registerStatus: "",
-        registerError: "",
-        loginStatus: "",
-        loginError: "",
-      };
-    },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(registerUser.pending, (state, action) => {
-      return { ...state, registerStatus: "pending" };
-    });
-    builder.addCase(registerUser.fulfilled, (state, action) => {
-      if (action.payload) {
-        const user = jwtDecode(action.payload);
-        return {
-          ...state,
-          token: action.payload,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          phone: user.phone,
-          coreBankingID: user.coreBankingID,
-          _id: user._id,
-          registerStatus: "success",
-        };
-      } else return state;
-    });
-    builder.addCase(registerUser.rejected, (state, action) => {
-      return {
-        ...state,
-        registerStatus: "rejected",
-        registerError: action.payload,
-      };
-    });
-    builder.addCase(loginUser.pending, (state, action) => {
-      return { ...state, loginStatus: "pending" };
-    });
-    builder.addCase(loginUser.fulfilled, (state, action) => {
-      if (action.payload) {
-        const user = jwtDecode(action.payload);
-        return {
-          ...state,
-          token: action.payload,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          phone: user.phone,
-          coreBankingID: user.coreBankingID,
-          _id: user._id,
-          loginStatus: "success",
-        };
-      } else return state;
-    });
-    builder.addCase(loginUser.rejected, (state, action) => {
-      return {
-        ...state,
-        loginStatus: "rejected",
-        loginError: action.payload,
-      };
-    });
-    builder.addCase(getUser.pending, (state, action) => {
-      return {
-        ...state,
-        getUserStatus: "pending",
-      };
-    });
-    builder.addCase(getUser.fulfilled, (state, action) => {
-      if (action.payload) {
-        const user = jwtDecode(action.payload);
-        return {
-          ...state,
-          token: action.payload,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          phone: user.phone,
-          coreBankingID: user.coreBankingID,
-          _id: user._id,
-          getUserStatus: "success",
-        };
-      } else return state;
-    });
-    builder.addCase(getUser.rejected, (state, action) => {
-      return {
-        ...state,
-        getUserStatus: "rejected",
-        getUserError: action.payload,
-      };
-    });
-  },
+         return {
+            ...state,
+            token: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: 0,
+            coreBankingID: "",
+            _id: "",
+            registerStatus: "",
+            registerError: "",
+            loginStatus: "",
+            loginError: "",
+         };
+      },
+   },
+   extraReducers: (builder) => {
+      builder.addCase(registerUser.pending, (state, action) => {
+         return { ...state, registerStatus: "pending" };
+      });
+      builder.addCase(registerUser.fulfilled, (state, action) => {
+         if (action.payload) {
+            const user = jwtDecode(action.payload);
+            return {
+               ...state,
+               token: action.payload,
+               firstName: user.firstName,
+               lastName: user.lastName,
+               email: user.email,
+               phone: user.phone,
+               coreBankingID: user.coreBankingID,
+               _id: user._id,
+               registerStatus: "success",
+            };
+         } else return state;
+      });
+      builder.addCase(registerUser.rejected, (state, action) => {
+         return {
+            ...state,
+            registerStatus: "rejected",
+            registerError: action.payload,
+         };
+      });
+      builder.addCase(loginUser.pending, (state, action) => {
+         return { ...state, loginStatus: "pending" };
+      });
+      builder.addCase(loginUser.fulfilled, (state, action) => {
+         if (action.payload) {
+            const user = jwtDecode(action.payload);
+            return {
+               ...state,
+               token: action.payload,
+               firstName: user.firstName,
+               lastName: user.lastName,
+               email: user.email,
+               phone: user.phone,
+               coreBankingID: user.coreBankingID,
+               _id: user._id,
+               loginStatus: "success",
+            };
+         } else return state;
+      });
+      builder.addCase(loginUser.rejected, (state, action) => {
+         return {
+            ...state,
+            loginStatus: "rejected",
+            loginError: action.payload,
+         };
+      });
+      builder.addCase(getUser.pending, (state, action) => {
+         return {
+            ...state,
+            getUserStatus: "pending",
+         };
+      });
+      builder.addCase(getUser.fulfilled, (state, action) => {
+         if (action.payload) {
+            const user = jwtDecode(action.payload);
+            return {
+               ...state,
+               token: action.payload,
+               firstName: user.firstName,
+               lastName: user.lastName,
+               email: user.email,
+               phone: user.phone,
+               coreBankingID: user.coreBankingID,
+               _id: user._id,
+               getUserStatus: "success",
+            };
+         } else return state;
+      });
+      builder.addCase(getUser.rejected, (state, action) => {
+         return {
+            ...state,
+            getUserStatus: "rejected",
+            getUserError: action.payload,
+         };
+      });
+   },
 });
 
 export const { loadUser, logoutUser } = authSlice.actions;

@@ -41,7 +41,7 @@ const GlobalStyles = createGlobalStyle`
       color: ${({ theme }) => theme.colors?.button};
    }
 
-   button{
+   button, .button{
     border: 0;
     padding: 0;
     cursor: pointer;
@@ -63,11 +63,11 @@ const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.colors.white};
    }
 
-   button:hover{
+   button:hover, .button:hover{
     background-color: ${({ theme }) => theme.colors?.buttonhover};
    }
 
-   input{
+   input, textarea{
     width: 100%;
     max-width: 560px;
    border: 1px solid grey;
@@ -81,9 +81,17 @@ const GlobalStyles = createGlobalStyle`
    background-color: ${({ theme }) => theme.colors?.grey01};
    }
 
-   input:hover{
+   input:hover, textarea:hover{
     background-color: ${({ theme }) => theme.colors?.inputhover};
    }
+
+
+input::placeholder, textarea::placeholder {
+    font-weight: 300;
+    opacity: .9;
+    font-size: 14px;
+    color: black;
+}
 
    table {
       border-collapse: collapse;
@@ -142,6 +150,10 @@ const GlobalStyles = createGlobalStyle`
   .inactive:hover{
    color:grey;
    background: #c9d2f2;
+  }
+
+  .entry{
+   cursor: pointer;
   }
 
 `;

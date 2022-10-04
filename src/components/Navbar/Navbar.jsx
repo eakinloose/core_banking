@@ -40,7 +40,10 @@ const NavBar = () => {
                   </>
                 )}
               </div>
-              <button className="contact">Contact Us</button>
+              {/* <Link to="/contact-us"> */}
+              <a href="mailto:info@denukan.com"><button className="contact">Contact Us</button></a>
+              
+              {/* </Link> */}
             </NavBottom>
           </div>
       </NavContent>
