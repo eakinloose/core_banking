@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import emailjs from '@emailjs/browser';
-import NavBar from "../../components/navbar/Navbar";
+import NavBar from "../../components/Navbar/Navbar";
 import { HomeContainer, HomeWrapper } from "./homeStyles";
 import sim2 from "../../assets/images/sim2.png";
 import sim3 from "../../assets/images/sim3.png";
