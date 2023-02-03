@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchLoans } from "./loansSlice";
+import ent from '../../assets/images/ent.png'
 
 const Loansview = () => {
    useEffect(() => {
@@ -14,8 +15,8 @@ const Loansview = () => {
    
    return (
       <div>
-         {loggedUser.coreBankingID} : {loggedUser.firstName}
-         <h3>List of loans</h3>
+         {/* {loggedUser.coreBankingID} : {loggedUser.firstName} */}
+         <h2>List of loans</h2>
          {/* <input
                      // onChange={(e) =>
                      //    setFormData({ ...formData, firstname: e.target.value })
@@ -58,7 +59,9 @@ const Loansview = () => {
                               </td>
                               <td>N{loan.address.geo.lat}</td>
                               <td>
-                                 <button>Manage</button>
+                                 <button className = "manage"><div className="cont">
+                                    <img src={ent} alt ="ent"/>
+                                    <span>Manage</span></div></button>
                               </td>
                            </tr>
                         </tbody>

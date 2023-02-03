@@ -62,7 +62,7 @@ export const HomeContainer = Styled.div`
 
 
   .h1 {
-  margin: 10rem auto;
+  margin: 15rem auto 8rem; 
   text-align: center;
   font-size: clamp(1.8rem, 2.5vw, 3rem);
   color: #333;
@@ -241,6 +241,8 @@ export const HomeWrapper = Styled.div`
 
       img{
         height: 70vh;
+        max-width: 410px;
+        max-height: 602px;
         position: absolute;
         border-radius: 20px;
         z-index: 1;

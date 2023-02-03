@@ -55,13 +55,13 @@ export const ContactWrapper = Styled.div`
   justify-content: center;
   align-content: center;
   align-items: center;
-  transform: translatey(70px);
+  transform: translatey(5%);
 
   .contentWrapper{
     width: 85%;
-    max-width: 1245px;
-    height: 83%;
-    max-height: 750px;
+    max-width: 1205px;
+    height: 89%;
+    max-height: 635px;
     display: flex;
     background: white;
     border-radius: 7px;

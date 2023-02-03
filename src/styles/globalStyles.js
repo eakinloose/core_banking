@@ -7,8 +7,9 @@ const GlobalStyles = createGlobalStyle`
    *::before,
    *::after {
       box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
    }
-
+ 
    html {
       font-size: 62.5%;
    }
@@ -19,7 +20,6 @@ const GlobalStyles = createGlobalStyle`
       width: 100%;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
-      font-family: 'Roboto', sans-serif;
       font-size: 1.5rem;
       font-weight: 400;
       letter-spacing: 0.02rem;
@@ -85,12 +85,12 @@ const GlobalStyles = createGlobalStyle`
     background-color: ${({ theme }) => theme.colors?.inputhover};
    }
 
-
 input::placeholder, textarea::placeholder {
-    font-weight: 300;
+    font-weight: 400;
     opacity: .9;
-    font-size: 14px;
-    color: black;
+    font-size: 12px;
+    text-transform: capitalize !important;
+    color: grey;
 }
 
    table {
@@ -155,6 +155,32 @@ input::placeholder, textarea::placeholder {
   .entry{
    cursor: pointer;
   }
+
+  .links{
+   cursor: pointer;
+  }
+
+  .manage{
+   background: none;
+   color: black;
+   
+   .cont{
+      display: flex;
+      align-items: center;
+
+   }
+
+   img{
+      height: 17px;
+      margin-right: 1rem;
+   }
+
+}
+
+.manage:hover{
+   background: none;
+   color: #3177bb;
+}
 
 `;
 

@@ -13,11 +13,11 @@ const DashBoard = () => {
    const loandash = useSelector((state) => state.display);
    const navigate = useNavigate();
 
-   useEffect(() => {
-      if (!auth._id) {
-         navigate("/");
-      }
-   }, [auth._id, navigate]);
+   // useEffect(() => {
+   //    if (!auth._id) {
+   //       navigate("/");
+   //    }
+   // }, [auth._id, navigate]);
 
    return (
       <div>

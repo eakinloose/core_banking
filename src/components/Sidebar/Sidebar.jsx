@@ -20,18 +20,19 @@ const Sidebar = () => {
       <div>
         <div className='avt'/>
         <br/>
-        <span>{loggedUser.coreBankingID}</span>
+        {loggedUser? <span>Dkn-test-12345</span> :
+        <span>{loggedUser.coreBankingID}</span>}
         <br/>
-        <span id='name'>{loggedUser.firstName} {loggedUser.lastName}</span>
+        {loggedUser? <span>dummy user</span> : <span id='name'>{loggedUser.firstName} {loggedUser.lastName}</span>}
         <br/>
         <br/>
         <button onClick={() => {dashLogout()}}>Log out</button>
       </div>
       <div>
-      <p onClick={()=>{dispatch(maindashboard())}}>Main Dashboard</p>
-      <p onClick={()=>dispatch(searchLoans())}>Search</p>
-      <p onClick={()=>{dispatch(loans())}}>All Loans</p>
-      <p onClick={()=>dispatch(loandashboard())}>Loan Applications </p>
+      <p className='links' onClick={()=>{dispatch(maindashboard())}}>Main Dashboard</p>
+      <p className='links' onClick={()=>dispatch(searchLoans())}>Search</p>
+      <p className='links' onClick={()=>{dispatch(loans())}}>All Loans</p>
+      <p className='links' onClick={()=>dispatch(loandashboard())}>Loan Applications </p>
       </div>
       <Link to="/">
         <img src={logo} alt="logo"/>

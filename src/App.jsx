@@ -9,7 +9,6 @@ import Home from './pages/home/Home';
 import DashBoard from './pages/dashboard/DashBoard';
 import Page404 from './pages/404/Page404';
 import { GlobalStyles } from './styles/globalStyles';
-// import Contact from './pages/contact/contact';
 
 function App() {
   const dispatch = useDispatch();
